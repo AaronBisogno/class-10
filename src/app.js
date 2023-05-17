@@ -21,12 +21,12 @@ app.set('views', __dirname+'/views');
 app.set('view engine', 'handlebars');
 app.use(express.static(__dirname+'/public'));
 
+app.use('/', viewsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartRouter);
 app.use('*', (req, res) =>{
     res.status(404).send({msg: "Route not found"});
 })
-app.use('/', viewsRouter);
 
 socketServer.on('connection', (socket) => {
     console.log(`New client connected ${socket.id}`);
