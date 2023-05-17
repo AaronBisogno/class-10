@@ -19,7 +19,7 @@ export class ProductManager {
 
     async addProduct(product){
         const { title, description, code, price, status, stock, category, thumbnails} = product;
-        if (title && description && price && code && stock && status && category) {
+        if (title && description && price && code && stock && category) {
             const codeValid = this.products.find(p => p.code == code);
             if (codeValid) {
                 return(`Product already exists.`);
@@ -28,7 +28,6 @@ export class ProductManager {
                 this.id = lastProduct ? lastProduct.id + 1 : 1;
                 product.id = this.id;
                 product.status = true;
-                product.thumbnails = [];
                 this.products.push(product)
                 await fs.promises.writeFile(this.path, JSON.stringify(this.products));
                 return `The product "${product.title}" was added successfully.`;
